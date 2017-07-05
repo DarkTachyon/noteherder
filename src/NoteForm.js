@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import './NoteForm.css'
 
 class NoteForm extends Component {
-    return() {
+    render() {
         return <p>NoteForm!</p>
     }
 }
