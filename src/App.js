@@ -10,25 +10,17 @@ class App extends Component {
         //this.setCurrentNote = this.setCurrentNote.bind(this)
 
         this.state = {
-            notes:  {
-                'note-4': {
-                    id: 'note-4',
-                    title: 'From App state',
-                    body: 'The fanciest!'
-                },
-                'note-5': {
-                    id: 'note-5',
-                    title: 'Another one',
-                    body: 'Also very fancy',
-                },
-            },
+            notes:  {},
 
-            currentNote: {
-                id: null,
-                title: '',
-                body: '',
+            currentNote: this.blankNote(),
+        }
+    }
 
-            }
+    blankNote = () => {
+        return {
+            id: null,
+            title: '',
+            body: '',
         }
     }
 
@@ -36,12 +28,41 @@ class App extends Component {
         this.setState({ currentNote: note })
     }
 
+    resetCurrentNote = () => {
+        this.setCurrentNote(this.blankNote())
+    }
+
+    saveNote = (note) => {
+        const notes = {...this.state.notes}
+        if (!note.id) {
+            note.id = Date.now()
+        }
+        notes[note.id] = note
+        this.setState({ notes })
+        this.setCurrentNote(note)
+    }
+
+    deleteNote = () => {
+        const notes = {...this.state.notes}
+        delete notes[this.state.currentNote.id]
+        this.setState({ notes })
+        this.resetCurrentNote()
+    }
+
     render() {
+        const actions = {
+            setCurrentNote: this.setCurrentNote,
+            resetCurrentNote: this.resetCurrentNote,
+            saveNote: this.saveNote,
+            deleteNote: this.deleteNote,
+        }
         return (
             <div className="App">
                 <Main notes={this.state.notes}
                 currentNote={this.state.currentNote}
-                setCurrentNote={this.setCurrentNote}/>
+                setCurrentNote={this.setCurrentNote}
+                {...actions}
+                />
                 </div>
         );
       }
