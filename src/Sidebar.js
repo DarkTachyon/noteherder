@@ -5,9 +5,9 @@ import quill from './quill.svg'
 import newHover from './new-hover.png'
 import newIcon from './new.png'
 
-const Sidebar = (props) => {
+const Sidebar = ({ resetCurrentNote, signOut }) => {
     const handleClick = () => {
-        props.resetCurrentNote()
+        resetCurrentNote()
     }
 
     return (
@@ -23,7 +23,9 @@ const Sidebar = (props) => {
             <img className="outline" src={newIcon} alt="New note" />
           </a>
           <div className="SignOut">
-            <button>
+            <button
+            onClick={signOut}
+            >
               <i className="fa fa-sign-out"></i>
             </button>
           </div>
